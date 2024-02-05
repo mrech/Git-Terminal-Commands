@@ -1,0 +1,152 @@
+######## DOCS & INFO ########
+https://git-scm.com/docs: url to the commands' documents
+https://git-scm.com/book/en/v2: url to the git book
+
+######## SETUP ########
+git config --global user.name "<user_name>": configure your git name
+git config user.name: check your git name
+git config --global user.email "<user_email>": configure your git email
+git config user.email: check your git email address
+git status: check if there is already a repo and the overall status  
+git init: to initialize an empty Git repository in the current directory (one repo per project)
+git config --global core.editor "code --wait": set Visual Studio Code as Git's default editor. 
+        Usefull to add multilines commit msg or when you have to amend a previous commit.
+        NB.: add "code" in the VSCode PATH (cmd+shift+p > to open the pallettes in VSCode)
+touch .gitignore: create a gitignore file in the root which contains all the <file>/<folder/> that do not need to be tracked. 
+        Templates on .gitingnore based on the application available here: "https://www.toptal.com/developers/gitignore"
+
+
+######## ADDING & COMMITING ########
+git log: details on the commits
+git log --oneline: shorten the hash numbers and the messages of the logs to one line
+git add: add files to the staging/index area
+git commit -m "<message>": create a checkpoint (atomic commit focuses on a single thing)  
+git rm --cached <file_name>: will completely remove the file's contents from the index(= staging area). 
+        This means that on commit the file will be removed from the HEAD commit. 
+        (If the file was only added to the index and not yet tracked this is a "no-op" (i.e., no operation).)
+git commit --amend: redo the previous commit whether is adding a new file or changing the commit msg
+git commit -am <msg>: to add and commit all unstaged changes in one line
+
+
+######## BRANCHES ########
+git branch: view your existing branches. '*' indicates the branch you are currently on
+git branch <branch-name>: make a new branch based upon the current HEAD. It does not switch to that branch
+        NB.: (HEAD -> master, oldies) two brenches that refers to the same commit. HEAD points to master 
+git switch|checkout <branch-name>: to switch to a new branch  
+        NB.: the branch name is like a bookmark in the book where it is indicates where it was left off
+git switch -c <branch-name>| git checkout -b <branch-name>: to create ("c") and switch to a new branch in one go
+git branch -d <branch-name>: to delete a branch. You cannot delete a branch you're currently in. 
+git branch -D <branch-name>: to force delete a branch without merging it first.
+git branch -m <new-branch-name>: rename the branch you are currently in
+git branch -M <new-branch-name>: -M flag/option is a shortcut for --move[-m] and --force[-f].
+        It renames the branch even if the new branch name already exists.
+git branch -v: to get more info on the branches
+
+
+######## MERGING BRANCHES ########
+git switch <branch-name>: switch to or checkout the branch you want to merge the changes into (the receiving branch)
+git merge <branch-name>: merge changes from a specific branch into the current branch 
+> FAST-FORWARD MERGE: main branch catches up with another branch which is some commits ahead
+> MERGE COMMIT: both the recipient branch and the merging branch have some new commits that can create some conflicts once merged:
+        1. Open up the file(s) with merge conflicts
+        2. Edit the file(s) to remove the conflicts. Decide which branch's content you want to keep in each conflict. 
+           Or keep the content from both.
+        3. Remove the conflict "markers" in the document
+        4. Add your changes and then make a commit!
+
+
+######## COMPARING CHANGES ########
+git diff: lists all the UNSTAGED changes in our working directory (that are not in the staging area)
+git diff [filename]: list all the UNSTAGED changes for specific files
+git diff HEAD: lists all STAGED and UNSTAGED changes in the working tree since HEAD's prior commit
+git diff HEAD [filename]: list all STAGED and UNSTAGED changes for specific files
+git diff --staged | git diff --cached: list only the STAGED changes
+git diff --staged [filename]: list all STAGED changes for specific files
+git diff <branch_name>..<branch_name>: will list all the changes between the tips of branch1 and branch2
+        NB.: the order matters
+git diff <branch_name>..<branch_name> [filename]: will list all the changes between the tips of branch1 and branch2 for specific files
+        NB.: the order matters
+git diff <commit_hash>..<commit_hash>: compare two commits based on their commit hashes
+        NB.: the order matters
+        NB.: use **git log --oneline** to get the hashes
+git diff <commit_hash>..<commit_hash> [filename]: will list all the changes between the two commits for specific files
+        NB.: the order matters
+
+
+######## STASHING ########
+git stash | git stash save: stash all uncommitted changes (staged and unstaged), 
+        so we can return to them without making unnecessary commits, 
+        reverting the changes in your working copy.
+git stash pop: removes the most recently stashed changes in your stash and re-apply them to your working copy.
+git stash apply: to apply stashed changes to multiple branches. 
+        It applies whatever is stashed without removing it from stash.
+git stash list: to view all stashes
+git stash apply stash@{n}: to specify a particular stash number (n) you want to apply.
+        NB.: Git assumes you want to apply the most recent stash.
+git stash drop stash@{n}: to delete a particular (n) stash.
+git stash clear: to clear the stash completely
+
+
+######## UNDOING CHANGES AND TIME TRAVELLING ########
+git checkout <commit_hash>: checkout at a particular commit. HEAD points at that commit rather than
+        at the branch pointer which is at the latest branch's commit. (i.e.: HEAD DETACHED)
+        ==== Naming convention ====
+        NB.: HEAD~1: the parent commit of HEAD 
+        NB.: HEAD~n: n^(th) parent commit of HEAD
+git switch <branch_name>: to get to the latest branch's commit. (HEAD -> BRANCH)
+git switch -c <branch-name>: to create ("c") and switch to a new branch based upon the current HEAD.
+git switch -: takes you back to whatever branch you were on last
+git checkout HEAD <file_name> | git checkout -- <file_name>: to revert the file back to whatever it looked like when you last commited.
+git restore <file_name>: to restore a file to the content in the HEAD. This command is not "undoable"
+        NB.: Same as "git checkout HEAD <file_name>" 
+git restore --source <commit_hash> <file_name>: to restore a file to the content in a specific commit. It default to HEAD.
+        NB.: It does not change the HEAD's position, we did not time travel. 
+        NB.: We can always go back to the file with the HEAD's content (last commit) using "git restore <file_name>"
+git restore --staged <file-name>: remove a file to your staging area (Unstaging Files)
+git reset <commit_hash>: to reset a repository to a specify commit hash and move all the follow up changes to the working directory.
+        Doing so the changes can be moved to another branch if needed. It removes the commits after a specify commit as if they never existed.
+        NB.: Usefull to reverse changes that you HAVE NOT shared
+git reset --hard <commit_hash>: to remove the commits after a specify commit hash plus the relative work in your working directory
+git revert <commit_hash>: to revert a repository commit WITHOUT removing it and the follow up commits. 
+        It does so by creating a new commit which reverses/undos the changes of a specific commit.
+        NB.: Usefull to reverse changes that you HAVE shared. So it easier to reconcile across the team since you did not alter history. 
+
+
+######## GITHUB - BASICS ########
+git clone <url>: to retrieve all the files within the repository and copy them to your local machine.
+        NB.: make sure you're not inside a repo when you clone since Git initializes a new repository
+             on your machine, giving you access to the full Git history of the cloned project.
+        NB.: OPTION > START FROM SCRATCH: to use to push your changes to Github if you haven't begun work on your local repo
+git remote -v: to view any existing remotes for a repository (-v: flag for verbose, i.e. more info)
+git remote add <remote_name> <url>: to add a new remote destination. The name choosen refer to the particular Github repo URL (i.e.: the remote location).
+        NB.: The default remote name is "origin".
+        NB.: OPTION > EXISTING REPO: to use to push your changes to Github if you already have an existing repo locally
+git remote remove <remote_name>: to delete remotes
+git remote rename <old_name> <new_name>: to rename remotes 
+git push <remote_name> <branch_name>: to push the specific local branch content to the remote Github location URL by calling its name.
+       NB.: The default brach_name has recently change from "Master" to "Main". Be awere of these two naming conventions. 
+git push <remote> <local_branch_name>:<remote_branch_name>: to push our local branch up to a remote branch with a different name
+git push -u <remote_name> <branch_name>: the -u option set the upstream (i.e., the source connection) of the remote branch to the local branch so that it
+        automatically link the two branches without specify them to each following/future 'git push'.
+
+
+######## GITHUB - FATCHING & PULLING ########
+        NB.: As a good practice, before you "push" something up to Github you better "pull" down to check if there are any changes
+git branch -r: to view the remote branches our local repository knows about. These "Remote Tracking Branch" are the references to the state
+        of the branches on the remote location. A bookmark pointing to the last known commit of the specific branch on the remote location. 
+git checkout <remote_name>/<branch_name>: to checkout at pointers of the remote branch location. For example, to see how things look like at 
+        the last known commit of the specific branch on the remote location (State: detached HEAD).
+git switch <branch_name>: to create a new local branch from the remote branch of the same name.
+        NB.: old version of this command is "git checkout --track <branch_name>"
+git fetch <remote_name>: gets the latest information from the remote location (i.e.: Github), BUT those changes will not be automatically integrated into 
+        your working directory/files.
+        NB.: run "git checkout <remote_name>/<branch_name>" to see the remote changes on your machine.
+        NB.: Update the remote tracking branch with the latest changes from the remote repository.
+git fetch <remote_name> <branch_name>: gets the latest information from the specified remote branch.
+git pull <remote_name> <branch_name>: updates our HEAD branch with the changes retrieved from remote.  
+        NB.: Like "git merge", git merge update my current branch with whatever changes are on the remote tracking branch
+        NB.: Whatever branch we run it from is where the changes will be merged into. 
+        NB.: "git pull" is the short version which default <remote_name> to origin and <branch_name> to the tracking default connection configured with
+             your current branch (i.e.: usually '<branch_name>' ---> 'origin/<branch_name>').
+        NB.: It can result in merge conflicts.
+        NB.: Not recommended if you have uncommitted changes!

@@ -1,0 +1,23 @@
+--help: to get help on a command
+ls: list the contents of the current directory
+ls -a: shows all the files (also hidden ones)
+gedit: open the ubuntu text editor
+pwd: prints the path where you currently are
+touch: create a file 	
+cd: change directory
+cd ..: back one folder
+clear: clean the terminal
+mkdir: create a directory
+rm: remove a file
+rm -rf:  remove (r=recursive, f=force) a folder
+sudo dpkg -i <package_file.deb>: to install a .deb file
+code .: open the current directory in Visual Studio Code
+mv [file] [new_directory]: move a file to a another directory. 
+    NB.: Also used to change a rename a file.
+cp [file] [new_directory]: to copy a file in another directory
+find . -type f -name "*.html": find a file ending with ".html" in the current directory
+    NB.: flag_2 -iname: ingore case sensitive
+    NB.: flag_2 -perm: check based on permission (e.g.: 0664)
+    NB.: flag_1 -size: check based on size (e.g.: -1M > size under 1Mb)
+    NB.: flag_2 -not -iname: example of possible Operators
+
