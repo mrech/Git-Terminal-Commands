@@ -1,6 +1,7 @@
 ######## DOCS & INFO ########
 https://git-scm.com/docs: url to the commands' documents
 https://git-scm.com/book/en/v2: url to the git book
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh: Github setup: SSH Config
 
 ######## SETUP ########
 git config --global user.name "<user_name>": configure your git name
@@ -113,11 +114,13 @@ git revert <commit_hash>: to revert a repository commit WITHOUT removing it and 
 
 
 ######## GITHUB - BASICS ########
+ssh -T git@github.com: testing your SSH connection
 git clone <url>: to retrieve all the files within the repository and copy them to your local machine.
         NB.: make sure you're not inside a repo when you clone since Git initializes a new repository
              on your machine, giving you access to the full Git history of the cloned project.
         NB.: OPTION > START FROM SCRATCH: to use to push your changes to Github if you haven't begun work on your local repo
 git remote -v: to view any existing remotes for a repository (-v: flag for verbose, i.e. more info)
+git remote set-url <remote_name> git@github.com:<user_name>/<repository_name>.git: changing/updating a remote repository's URL to use SSH 
 git remote add <remote_name> <url>: to add a new remote destination. The name choosen refer to the particular Github repo URL (i.e.: the remote location).
         NB.: The default remote name is "origin".
         NB.: OPTION > EXISTING REPO: to use to push your changes to Github if you already have an existing repo locally
