@@ -26,6 +26,8 @@ git rm --cached <file_name>: will completely remove the file's contents from the
         This means that on commit the file will be removed from the HEAD commit. 
         (If the file was only added to the index and not yet tracked this is a "no-op" (i.e., no operation).)
 git commit --amend: redo the previous commit whether is adding a new file or changing the commit msg
+        (To add a new file or updating an existing one, it needs to be first added to the staging area)
+        (To exit Vim :q)
 git commit -am <msg>: to add and commit all unstaged changes in one line
 
 
