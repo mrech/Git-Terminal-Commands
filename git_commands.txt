@@ -214,7 +214,10 @@
 ######## GITHUB - FATCHING & PULLING ########
         NB.: As a good practice, before you "push" something up to 
              Github you better "pull" or "fetch" to check 
-             if there are any changes
+             if there are any changes.
+> git pull: update remote Azure Repos. It checks the final changes and
+        updates our HEAD branch with the changes retrieved from remote.
+        Changes might be new brenches added and/or other's pushed commits. 
 > git branch -r: to view the remote branches our local repository 
         knows about. These "Remote Tracking Branch" are the references 
         to the state of the branches on the remote location. 
