@@ -201,7 +201,7 @@
 > git push <remote_name> <branch_name>: to push the specific local 
         branch content to the remote Github location URL by calling
         its name.
-        NB.: The default brach_name has recently change from "Master"
+        NB.: The default branch_name has recently change from "Master"
              to "Main". Be awere of these two naming conventions. 
 > git push <remote> <local_branch_name>:<remote_branch_name>: to push 
         our local branch up to a remote branch with a different name
